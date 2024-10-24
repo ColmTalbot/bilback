@@ -1,0 +1,51 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "setuptools_scm[toml]>=3.4.3",
+    "wheel",
+    "numpy"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "bilback/_version.py"
+
+[project]
+name = "bilback"
+authors = [{name = "Colm Talbot", email = "colm.talbot@ligo.org"}]
+description = "Optimized functionality for Bilby"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+license = {text = "MIT"}
+dependencies = ["numpy", "plum-dispatch"]
+readme = "README.md"
+urls = {Homepage = "https://github.com/bilby-dev/bilback"}
+dynamic = ["version"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[project.optional-dependencies]
+cupy = ["cupy"]
+cython = ["bilby_cython"]
+jax = ["jax"]
+mlx = ["mlx"]
+rust = ["bilby_rust"]
+all = ["cupy", "bilby_cython", "jax", "mlx", "bilby_rust"]
+test = ["pytest", "pytest-cov"]
+doc = ["sphinx", "sphinx_rtd_theme", "myst-parser", "sphinx-tabs"]
+
+[project.entry-points."bilbackends"]
+jax = "bilback.jax"
+cupy = "bilback.cupy"
+rust = "bilback.rust"
+mlx = "bilback.mlx"
+cython = "bilback.cython"
